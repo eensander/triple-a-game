@@ -1,6 +1,3 @@
-
-
-
 int max_velocity = 0;
 int max_particles = 1500;
 
@@ -12,8 +9,6 @@ ArrayList<Bullet> selfBullets;
 
 int max_violent_ships = 3;
 ArrayList<Ship> violentShips;
-
-
 
 boolean keyLeft, keyRight, keyUp, keyDown, keySpace;
 
@@ -29,15 +24,11 @@ int gamestate = 0;
 int score = 0;
 
 void setup() {
-	
 	size(1000,600);
 	colorMode(RGB, 255);
 
-	//background(180, 60, 50);
 	background(5, 5, 5);
-	//stroke(255);
 	frameRate(60);
-	
 		
 	mainFrame = new MainFrame(width/2, height/2, Color(240,200,190,255));
 	
@@ -48,7 +39,6 @@ void setup() {
 	shipSelf = new ShipSelf(width/2, height/2, 2, color(16,128,32));
 	
 	score = 0;
-	
 }
 
 void draw() {
@@ -64,48 +54,33 @@ void draw() {
 		background_r++;
 		background_b--;
 	}
-	//background(sin(0.1*background_i+0)*20, sin(0.1*background_i+2)*20, sin(0.1*background_i+4)*20);
 	background(background_r/255*20, background_g/255*20, background_b/255*20);
-	
 	
 	switch (gamestate)
 	{
-		
 		case 0:
-		
 			gamestate_main();
 			break;
-		
-		
 		case 1:
-			
 			gamestate_playing();
 			break;
-		
 		case 2:
-		
 			gamestate_gameover();
 			break;
-		
 	}
 	
 }
 
 void gamestate_main() {
-	
-	//background(2,5,2);
 
 	btn_start = new Button("Start", width/2-26, 150, 25, color(244));
 	btn_opt = new Button("Options", width/2-43, 180, 25, color(204));
-	
 	
 	btn_start.display();
 	btn_opt.display();
 	
 	btn_start.update();
 	btn_opt.update();
-
-	
 
 	/*
 	 * 37 - links
@@ -115,11 +90,9 @@ void gamestate_main() {
 	
 	if(btn_opt.pressed()) {
 		background(128,255,200);
-		
 	}
 	
 	if(btn_start.pressed()) {
-		//setup();
 		gamestate = 1;
 		////shipMeLoc = {width/2, height-50};
 	}
@@ -127,8 +100,6 @@ void gamestate_main() {
 }
 
 void gamestate_gameover() {
-
-
 	font = loadFont("FFScala.ttf");
 	textFont(font);
 	textSize(40);
@@ -145,14 +116,11 @@ void gamestate_gameover() {
 	btn_start = new Button("Start", width/2-26, 150, 25, color(244));
 	btn_opt = new Button("Options", width/2-43, 180, 25, color(204));
 	
-	
 	btn_start.display();
 	btn_opt.display();
 	
 	btn_start.update();
 	btn_opt.update();
-
-	
 
 	/*
 	 * 37 - links
@@ -162,7 +130,6 @@ void gamestate_gameover() {
 	
 	if(btn_opt.pressed()) {
 		background(128,255,200);
-		
 	}
 	
 	if(btn_start.pressed()) {
@@ -170,14 +137,10 @@ void gamestate_gameover() {
 		gamestate = 1;
 		////shipMeLoc = {width/2, height-50};
 	}
-	
 }
 
 
 void gamestate_playing() {
-	
-
-	
 	//for (Particle part : particles) {
 	for (int i = particles.size() - 1; i >= 0; i--) {
 		Particle part = particles.get(i);
@@ -241,7 +204,6 @@ void gamestate_playing() {
 
 		if (selfLoc[2] >= violentLoc[2]-violentLoc[0]/2 && selfLoc[2] <= violentLoc[2]+violentLoc[0]/2 && selfLoc[3] >= violentLoc[3]-violentLoc[1]/2 && selfLoc[3] <= violentLoc[3]+violentLoc[1]/2)
 		{
-			
 			shipSelf.damage(ship.getSuicideDamage());
 			
 			mainFrame.setX(ship.getX());
@@ -252,10 +214,7 @@ void gamestate_playing() {
 					particles.remove(0);
 				particles.add(new Particle(mainFrame));			
 			}
-
 			violentShips.remove(i);
-
-				
 		}
 		
 		ship.update();
@@ -277,23 +236,23 @@ void gamestate_playing() {
 	*/
 	
 	if (violentShips.size() < max_violent_ships)
-	{
-		
-		/* Side can be */		
-		
+	{		
+		/* Side can be */
 		for (int i = 0; i < random(0, max_violent_ships); i ++ )
 		{
 			sx = -20;
 			sy = -20;
 			
 			if (random(0,1) > 0.5)
-			{ /* top, botom */
+			{
+				/* top, botom */
 				sx = random(0, width);
 				if (random(0,1) > 0.5) 
 					sy = height + 20;
 			}
 			else
-			{ /* left, right */
+			{
+				/* left, right */
 				sy = random(0, height);
 				if (random(0,1) > 0.5) 
 					sx = width + 20;
@@ -311,7 +270,6 @@ void gamestate_playing() {
 		gamestate = 2;
 	}
 	
-	
 	popMatrix();
 	
 	font = loadFont("FFScala.ttf"); 
@@ -320,11 +278,8 @@ void gamestate_playing() {
 	fill(255);
 	textSize(17);
 
-	text(score, 15, 30);
-
-	
+	text(score, 15, 30);	
 }
-
 
 void keyPressed() {
 	setMove(keyCode, true);
@@ -336,7 +291,6 @@ void keyReleased() {
  
 boolean setMove(int k, boolean b) {
 	//keys[k] = b;
-	
 	switch (k) {
 		case UP:
 			return keyUp = b;
@@ -356,7 +310,6 @@ boolean setMove(int k, boolean b) {
 		default:
 			return b;
 	}
-	
 }
 
 class Bullet
@@ -368,7 +321,6 @@ class Bullet
 	
 	color col;
 
-	
 	Bullet(int ix, int iy, int isize, color icol, idir, int idamage)
 	{
 		size	= isize;
@@ -393,10 +345,8 @@ class Bullet
 	}
 	void update()
 	{
-
 		y = y+sin(direction)*velocity;
 		x = x+cos(direction)*velocity;
-		
 	}
 	
 	int[] getLoc()
@@ -431,7 +381,6 @@ class Ship
 	
 	Ship (int ix, int iy, int isize, int ispeed, color icol, direction idir, int ihealth)
 	{
-		
 		size	= isize;
 		x		= ix;
 		y		= iy;
@@ -445,7 +394,6 @@ class Ship
 		health = max_health;
 		
 		direction = idir;
-			
 	}
 	
 	void displayHealthBar()
@@ -492,8 +440,8 @@ class Ship
 		int x1 = obj[2];
 		int y1 = obj[3];
 		
-			//fill(0, 255, 0);
-			//rect(x-w/2, y-h/2, h, w);
+		//fill(0, 255, 0);
+		//rect(x-w/2, y-h/2, h, w);
 
 		if (x-w/2 <= (x1+w1) && x+w/2 >= x1-w1 && 
 			y-h/2 <= y1+h1 && y+h/2 > y1-h1) {
@@ -549,7 +497,6 @@ class ShipViolent extends Ship {
 		super(ix, iy, 20, ispeed, icol, idir, ihealth);
 	}
 	
-
 	void display()
 	{
 		//println("x: " + x);
@@ -558,7 +505,6 @@ class ShipViolent extends Ship {
 		pushMatrix();
 		noStroke();
 		
-		
 		translate(x, y);
 		rotate(direction);
 		/*fill(128, 0, 0);
@@ -566,7 +512,6 @@ class ShipViolent extends Ship {
 		fill(col);
 		rect(-15, -5, 30, 10);
 		*/
-		
 		
 		fill(32,32,180);
 		rect(-3, -30, 6, 7);
@@ -592,8 +537,7 @@ class ShipViolent extends Ship {
 		
 	}
 	void update()
-	{
-		
+	{		
 		//x = x + xvel;
 		//if (abs(xvel) > 45)
 		//	xvel = xvel/2;
@@ -602,62 +546,30 @@ class ShipViolent extends Ship {
 		int dist_y = shipSelf.getY() - y;
 		int dist_x = shipSelf.getX() - x;
 		
-		
 		new_direction = atan(dist_y / dist_x);
 		
-		//if (new_direction - direction > PI/2)
-		//{
-			//direction += 0.1;
-		//}
-		
-		
-		//if (new_direction - direction < PI/2)
-		//{
-			//direction -= 0.1;
-		//}
-		
-		
-		//direction = PI + PI/2 + new_direction;
 		if (shipSelf.getX() < x)
 		{
 			new_direction -= PI;
 		}
 		
-		//direction = new_direction + PI/2;/*
 		if (new_direction + PI/2 > direction)
 			rotate_vel += rotate_frict;
 		
 		if (new_direction + PI/2 < direction)
-			rotate_vel -= rotate_frict;
-		//*/
-	
+			rotate_vel -= rotate_frict;	
 		
 		rotate_vel=rotate_vel*0.90;
 		
 		direction = direction+rotate_vel;
 		
-		//if (x > width+16)
-			//x = -16;
-		//if (x < -16)
-			//x = width+16;
-		//if (y > height + 32)
-			//y = -32;
-		//if (y < -32)
-			//y = height + 32;
-		
 		x = x+sin(direction)*speed;
 		y = y-cos(direction)*speed;
-		
-		
-		
-		//direction+=rotate_vel;
 		
 		fill(color(100,100,100));
 		
 		popMatrix();
-		
-	}
-	
+	}	
 	
 	boolean finished()
 	{
@@ -669,7 +581,6 @@ class ShipViolent extends Ship {
 		{
 			return false;
 		}
-
 	}
 	
 	int getSuicideDamage()
@@ -699,7 +610,6 @@ class ShipSelf extends Ship {
 
 	int cur_damage;
 
-
 	ShipSelf (int ix, int iy, int ispeed, color icol)
 	{
 		super(ix, iy, 20, ispeed, icol, 0, 100);
@@ -722,7 +632,6 @@ class ShipSelf extends Ship {
 		rect(-15, -5, 30, 10);
 		*/
 		
-		
 		fill(180,32,32);
 		rect(-3, -30, 6, 7);
 		//fill(0, 0, 0);
@@ -743,19 +652,12 @@ class ShipSelf extends Ship {
 		rect(13, 5, 3, 14);
 		popMatrix();
 		
-		
 		displayHealthBar();
-		
 	}
 	void update()
 	{
 		
-		//x = x + xvel;
-		//if (abs(xvel) > 45)
-		//	xvel = xvel/2;
-		
 		pushMatrix();
-			
 		
 		if (keyLeft)
 		{
@@ -803,7 +705,6 @@ class ShipSelf extends Ship {
 		fill(color(100,100,100));
 		//rect(x-10, 20, y-10, 20);
 		
-		
 		/*if (x < 10)
 		{
 			x = 10;
@@ -822,10 +723,8 @@ class ShipSelf extends Ship {
 				xvel = 0;
 		}*/
 		
-		popMatrix();
-		
+		popMatrix();	
 	}
-	
 	
 	boolean finished()
 	{
@@ -837,15 +736,11 @@ class ShipSelf extends Ship {
 		{
 			return false;
 		}
-
 	}
 	
 }
 
-
-
 class Color {
-	
 	int r;
 	int g;
 	int b;
@@ -900,10 +795,8 @@ class Color {
 	color get()
 	{
 		return color(r,g,b,t);
-	}
-	
+	}	
 }
-
 
 class MainFrame {
 	
@@ -916,7 +809,6 @@ class MainFrame {
 	MainFrame (int par_pos_x, int par_pos_y, color par_particlecolor) {
 		pos_x = par_pos_x;
 		pos_y = par_pos_y;
-		//maincolor = par_maincolor;
 		particlecolor = par_particlecolor;
 	}
 	
@@ -944,9 +836,7 @@ class MainFrame {
 	{
 		return particlecolor;
 	}
-	
 }
-
 
 class Particle {
 	
@@ -954,7 +844,6 @@ class Particle {
 	float direction = 0;
 	int direction_x = 0;
 	int direction_y = 0;
-	
 	
 	float velocity = 5;
 	float velocity_max = 5;
@@ -972,12 +861,9 @@ class Particle {
 	
 	Color pointcolor;
 	
-	
 	MainFrame mainframe;
 	
-	//  
 	Particle (MainFrame mf) {
-		
 		mainframe = mf;
 		direction = random(0, TWO_PI);
 		velocity = random(3, 9);
@@ -992,17 +878,13 @@ class Particle {
 		pos_x = mainframe.getX();
 		pos_y = mainframe.getY();
 		
-		
 		direction_x = random(0,1);
 		direction_y = random(0,1);
-		
 	}
 	
 	void update()
 	{
 		//direction = random(0, TWO_PI);
-		
-		
 		
 		if (pos_x > width || pos_x < 0)
 		{
@@ -1014,9 +896,7 @@ class Particle {
 			direction_y = direction_y * -1;
 		}
 		
-		
 		velocity = velocity * gravity;
-		
 		
 		pos_x = pos_x + cos(direction) * direction_x * velocity;
 		pos_y = pos_y + sin(direction) * direction_y * velocity;
@@ -1029,7 +909,6 @@ class Particle {
 		//v = inter_min + (float(velocity - velocity_min) / float(velocity_max - velocity_min) * (inter_max-inter_min));
 		v = frameCount/(frameRate)*0.1;
 		shade = 0.3 + (float(velocity - velocity_min) / float(velocity_max - velocity_min) * (1-0));
-    
 
 		pointcolor.setR((sin(v + 0) * 127 + 128)*shade);
 		pointcolor.setG((sin(v + 2) * 127 + 128)*shade);
@@ -1038,19 +917,13 @@ class Particle {
 		pointcolor.setR(background_r/255*127+128*shade);
 		pointcolor.setG(background_g/255*127+128*shade);
 		pointcolor.setB(background_b/255*127+128*shade);
-	
-	
-	
 	}
 	
 	void display()
 	{
 		stroke(pointcolor.get());
-		
 		swidth = 0.1 + (float(velocity - velocity_min) / float(velocity_max - velocity_min) * (3-0.1));
-
 		strokeWeight(swidth);
-		
 		point(pos_x, pos_y);
 	}
 	
@@ -1065,20 +938,6 @@ class Particle {
 	
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class Button
 {
 	int x, y;
@@ -1087,7 +946,6 @@ class Button
 	char toprint;
 	
 	color currentcolor;
-	
 	
 	Button(char itoprint, int ix, int iy, int isize, color icolor)
 	{
@@ -1104,7 +962,6 @@ class Button
 		h 				= textAscent(toprint);
 		currentcolor	= icolor;
 	}
-	
 		
 	boolean pressed() 
 	{
